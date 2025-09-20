@@ -9,3 +9,6 @@ It includes:
 
 ## How to Use
 Clone this repository and open `index.html` in your browser to view the site.
+## 许可证
+
+本项目采用 [MIT 许可证](LICENSE)。
