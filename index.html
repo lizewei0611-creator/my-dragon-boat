@@ -22,10 +22,11 @@
     <style>
       /* --- 核心变量：科技配色 --- */
       :root {
-        --bg-deep: #050b14; /* 深空黑 */
+        --bg-deep: #050b14;
         --bg-gradient: linear-gradient(135deg, #050b14 0%, #0a192f 100%);
-        --neon-cyan: #00f3ff; /* 电光青 (科技核心色) */
-        --neon-blue: #0066ff; /* 深海蓝 */
+        --neon-cyan: #00f3ff;
+        --neon-blue: #0066ff;
+        --neon-red: #ff3366;
         --text-main: #ffffff;
         --text-muted: #a0aab5;
         --glass-bg: rgba(255, 255, 255, 0.03);
@@ -80,23 +81,44 @@
         top: 0;
         width: 100%;
         z-index: 1000;
-        background: rgba(5, 11, 20, 0.8);
-        backdrop-filter: blur(15px); /* 磨砂效果 */
+        background: rgba(5, 11, 20, 0.95);
+        backdrop-filter: blur(15px);
         border-bottom: var(--glass-border);
-        padding: 1rem 5%;
+        padding: 0.8rem 5%;
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-      .logo {
-        font-family: "Orbitron", sans-serif; /* 机械感字体 */
-        font-size: 1.5rem;
+
+      /* Logo 容器 */
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      /* Logo 图片样式 - 针对红色印章风格优化 */
+      .logo-img {
+        height: 55px;
+        width: auto;
+        filter: drop-shadow(0 0 12px rgba(220, 38, 38, 0.4));
+        transition: 0.3s;
+      }
+
+      .logo-img:hover {
+        filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.7));
+        transform: scale(1.05);
+      }
+
+      .logo-text {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.3rem;
         font-weight: 700;
         color: var(--text-main);
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
         text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
       }
-      .logo span {
+      .logo-text span {
         color: var(--neon-cyan);
       }
 
@@ -133,7 +155,6 @@
         padding: 0 20px;
         overflow: hidden;
       }
-      /* 动态背景图层 */
       .hero-bg {
         position: absolute;
         top: 0;
@@ -146,7 +167,6 @@
         z-index: -1;
         filter: contrast(1.2) brightness(0.8);
       }
-      /* 叠加蓝色渐变，营造深海感 */
       .hero-overlay {
         position: absolute;
         top: 0;
@@ -195,6 +215,7 @@
         transition: 0.4s;
         cursor: pointer;
         animation: fadeInUp 1.4s ease-out;
+        display: inline-block;
       }
       .btn-tech:hover {
         background: var(--neon-cyan);
@@ -209,6 +230,7 @@
       }
       .section-header {
         margin-bottom: 4rem;
+        text-align: center;
       }
       .section-header h2 {
         font-size: 2.5rem;
@@ -219,11 +241,63 @@
         width: 60px;
         height: 4px;
         background: var(--neon-cyan);
-        margin-top: 10px;
+        margin: 10px auto;
         box-shadow: 0 0 10px var(--neon-cyan);
       }
 
-      /* --- 核心业务 (全息卡片设计) --- */
+      /* --- 照片展示区 --- */
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+        border: var(--glass-border);
+        aspect-ratio: 16/10;
+        cursor: pointer;
+        transition: 0.4s;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.5s;
+        filter: grayscale(20%);
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.1);
+        filter: grayscale(0%);
+      }
+
+      .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+        padding: 1.5rem;
+        transform: translateY(100%);
+        transition: 0.4s;
+      }
+
+      .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+      }
+
+      .gallery-overlay h4 {
+        color: var(--neon-cyan);
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      /* --- 核心业务 --- */
       .services-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -233,12 +307,11 @@
         background: var(--glass-bg);
         border: var(--glass-border);
         padding: 2.5rem;
-        border-radius: 4px; /* 硬朗的边角 */
+        border-radius: 4px;
         position: relative;
         transition: 0.4s;
         overflow: hidden;
       }
-      /* 卡片悬停光效 */
       .tech-card::before {
         content: "";
         position: absolute;
@@ -275,7 +348,7 @@
         font-size: 0.95rem;
       }
 
-      /* --- 数据展示 (数字仪表盘风格) --- */
+      /* --- 数据展示 --- */
       .stats-section {
         background: rgba(255, 255, 255, 0.02);
         border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -300,7 +373,194 @@
         margin-top: 5px;
       }
 
-      /* --- 关于我们 (左右布局) --- */
+      /* --- 团队架构 (全新设计) --- */
+      .team-section {
+        background: rgba(0, 102, 255, 0.02);
+      }
+
+      /* 组织架构图 */
+      .org-chart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+        margin-bottom: 5rem;
+      }
+
+      /* 管理层 */
+      .org-level-management {
+        display: flex;
+        gap: 3rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* 团队成员卡片 */
+      .team-card {
+        background: var(--glass-bg);
+        border: var(--glass-border);
+        padding: 2.5rem;
+        border-radius: 4px;
+        text-align: center;
+        min-width: 260px;
+        position: relative;
+        transition: 0.4s;
+        overflow: hidden;
+      }
+
+      .team-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--neon-cyan),
+          transparent
+        );
+        transform: scaleX(0);
+        transition: 0.4s;
+      }
+
+      .team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 243, 255, 0.15);
+        border-color: rgba(0, 243, 255, 0.4);
+      }
+
+      .team-card:hover::after {
+        transform: scaleX(1);
+      }
+
+      /* 头像容器 */
+      .avatar-container {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 1.5rem;
+        position: relative;
+      }
+
+      .avatar-ring {
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        border: 2px solid var(--neon-cyan);
+        border-radius: 50%;
+        opacity: 0;
+        transition: 0.4s;
+      }
+
+      .team-card:hover .avatar-ring {
+        opacity: 1;
+        animation: rotate 3s linear infinite;
+      }
+
+      .avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        transition: 0.4s;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      }
+
+      .team-card:hover .avatar {
+        border-color: var(--neon-cyan);
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+      }
+
+      /* 职位标签 */
+      .position-tag {
+        display: inline-block;
+        background: rgba(0, 243, 255, 0.1);
+        color: var(--neon-cyan);
+        padding: 0.4rem 1.2rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(0, 243, 255, 0.3);
+        font-weight: 600;
+      }
+
+      .position-tag.ceo {
+        background: rgba(255, 51, 102, 0.1);
+        color: var(--neon-red);
+        border-color: rgba(255, 51, 102, 0.3);
+      }
+
+      .team-card h4 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: white;
+        font-weight: 700;
+      }
+
+      .team-card .bio {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-top: 1rem;
+      }
+
+      /* 部门展示 */
+      .departments {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .dept-card {
+        background: var(--glass-bg);
+        border: var(--glass-border);
+        padding: 2rem;
+        border-radius: 4px;
+        transition: 0.4s;
+      }
+
+      .dept-card:hover {
+        background: var(--card-hover);
+        border-color: rgba(0, 243, 255, 0.3);
+      }
+
+      .dept-icon {
+        font-size: 2rem;
+        color: var(--neon-cyan);
+        margin-bottom: 1rem;
+      }
+
+      .dept-card h4 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+        color: white;
+      }
+
+      .dept-card ul {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .dept-card li {
+        padding: 0.3rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .dept-card li::before {
+        content: "▹";
+        position: absolute;
+        left: 0;
+        color: var(--neon-cyan);
+      }
+
+      /* --- 关于我们 --- */
       .about-layout {
         display: flex;
         gap: 4rem;
@@ -324,7 +584,6 @@
         box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
       }
 
-      /* 装饰性边框 */
       .tech-border {
         position: absolute;
         width: 100%;
@@ -354,7 +613,7 @@
         color: #555;
       }
 
-      /* --- 动画 Keyframes --- */
+      /* --- 动画 --- */
       @keyframes fadeInUp {
         from {
           opacity: 0;
@@ -363,6 +622,15 @@
         to {
           opacity: 1;
           transform: translateY(0);
+        }
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
         }
       }
 
@@ -383,17 +651,33 @@
         .about-layout {
           flex-direction: column;
         }
+        .logo-img {
+          height: 40px;
+        }
+        .logo-text {
+          font-size: 1rem;
+        }
       }
     </style>
   </head>
   <body>
     <!-- 导航 -->
     <header>
-      <div class="logo">YICHENG <span>GEWU</span></div>
+      <div class="logo-container">
+        <!-- ✅ 你的公司 Logo -->
+        <img
+          src="https://d41chssnpqdne.cloudfront.net/user_upload_by_module/chat_bot/files/159203934/xpDOxC6LkdaftLYY.png?Expires=1765896150&Signature=X94GXeINy25Xx~U5kS4WRWRVT5-8vtRM~LUNzKpj2C7iZzLUyxpySlLZKDkpBVytT9T4ZhYEbhdTBk1N7EdnDLbeC4EqtmGE6Uwzo6L8FwThdt14yRLLZ8QK35KLXwVGOYCzXUFNhvzyUrwwRzUn~AJOLqPYbZCwCzEbfrx8MH6FdVEtQbomNKFpGYT9~v6QTGu5v2xKe8msY7ilLuKHv0sQtbHTlNN9Ys5dmmlHS4gLkyNgs5KL5biZKhVwnYmiZ1Akcc7MrNuKgFkhiMxsLwYz0o0lhck-oCNSahnAn6rAn~KLSmDV0MmLX5CQyesT5D8cWP~as~19fg7LvTAd7w__&Key-Pair-Id=K3USGZIKWMDCSX"
+          alt="意诚格物Logo"
+          class="logo-img"
+        />
+        <div class="logo-text">YICHENG <span>GEWU</span></div>
+      </div>
       <nav>
         <ul>
           <li><a href="#home">首页</a></li>
+          <li><a href="#gallery">精彩瞬间</a></li>
           <li><a href="#services">科技·赛事</a></li>
+          <li><a href="#team">团队架构</a></li>
           <li><a href="#about">关于我们</a></li>
           <li><a href="#contact">联系</a></li>
         </ul>
@@ -415,6 +699,83 @@
       <a href="#services" class="btn-tech">探索科技</a>
     </div>
 
+    <!-- 📸 精彩瞬间展示区 -->
+    <section id="gallery">
+      <div class="section-header">
+        <h2>GALLERY</h2>
+        <p style="color: var(--text-muted)">精彩瞬间 · 科技赋能</p>
+        <div class="line"></div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img
+            src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800"
+            alt="龙舟赛事"
+          />
+          <div class="gallery-overlay">
+            <h4>龙舟竞渡</h4>
+            <p>传统文化与现代科技的完美融合</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800"
+            alt="智能设备"
+          />
+          <div class="gallery-overlay">
+            <h4>智能计时系统</h4>
+            <p>毫秒级精准计时，奥运标准执行</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800"
+            alt="团队协作"
+          />
+          <div class="gallery-overlay">
+            <h4>专业团队</h4>
+            <p>经验丰富的赛事执行团队</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800"
+            alt="水上运动"
+          />
+          <div class="gallery-overlay">
+            <h4>桨板运动</h4>
+            <p>推广全民水上运动新风尚</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800"
+            alt="科技研发"
+          />
+          <div class="gallery-overlay">
+            <h4>科技研发</h4>
+            <p>自主研发水上运动智能设备</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img
+            src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800"
+            alt="企业文化"
+          />
+          <div class="gallery-overlay">
+            <h4>企业团建</h4>
+            <p>打造独特的水上运动团建体验</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 核心业务 -->
     <section id="services">
       <div class="section-header">
@@ -424,7 +785,6 @@
       </div>
 
       <div class="services-grid">
-        <!-- 卡片 1 -->
         <div class="tech-card">
           <div class="card-icon"><i class="fas fa-stopwatch"></i></div>
           <h3>智能赛事系统</h3>
@@ -432,7 +792,7 @@
             采用高精度电子计时与无人机巡航直播技术，为龙舟、桨板赛事提供奥运级执行标准。
           </p>
         </div>
-        <!-- 卡片 2 -->
+
         <div class="tech-card">
           <div class="card-icon"><i class="fas fa-microchip"></i></div>
           <h3>水上运动黑科技</h3>
@@ -440,7 +800,7 @@
             研发智能穿戴设备、碳纤维竞技装备及水上安全监测系统，用数据赋能每一次划桨。
           </p>
         </div>
-        <!-- 卡片 3 -->
+
         <div class="tech-card">
           <div class="card-icon"><i class="fas fa-dragon"></i></div>
           <h3>龙舟文化 IP</h3>
@@ -467,11 +827,109 @@
       </div>
     </section>
 
+    <!-- 🏢 团队架构 -->
+    <section id="team" class="team-section">
+      <div class="section-header">
+        <h2>LEADERSHIP TEAM</h2>
+        <p style="color: var(--text-muted)">精英领导 · 专业执行</p>
+        <div class="line"></div>
+      </div>
+
+      <!-- 管理层 -->
+      <div class="org-chart">
+        <div class="org-level-management">
+          <!-- ✅ 总经理 李泽维 -->
+          <div class="team-card">
+            <div class="avatar-container">
+              <div class="avatar-ring"></div>
+              <img
+                src="https://i.pravatar.cc/150?img=33"
+                alt="李泽维"
+                class="avatar"
+              />
+            </div>
+            <div class="position-tag ceo">总经理 / CEO</div>
+            <h4>李泽维</h4>
+            <p class="bio">
+              5年水上运动行业经验，现任横琴龙舟俱乐部负责人，致力于推动水上运动科技化与产业化发展
+            </p>
+          </div>
+
+          <!-- ✅ 副总经理 罗上鏗 -->
+          <div class="team-card">
+            <div class="avatar-container">
+              <div class="avatar-ring"></div>
+              <img
+                src="https://i.pravatar.cc/150?img=12"
+                alt="罗上鏗"
+                class="avatar"
+              />
+            </div>
+            <div class="position-tag">副总经理 / COO</div>
+            <h4>罗上鏗</h4>
+            <p class="bio">
+              2年大型赛事运营经验，擅长公司行政及人力管理，推动公司业务快速发展
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 部门展示 -->
+      <div class="section-header" style="margin-top: 5rem">
+        <h3 style="font-size: 2rem; color: var(--neon-cyan)">核心部门</h3>
+      </div>
+
+      <div class="departments">
+        <div class="dept-card">
+          <div class="dept-icon"><i class="fas fa-code"></i></div>
+          <h4>技术研发部</h4>
+          <ul>
+            <li>智能计时系统开发</li>
+            <li>数据分析平台</li>
+            <li>IoT设备研发</li>
+            <li>移动端应用开发</li>
+          </ul>
+        </div>
+
+        <div class="dept-card">
+          <div class="dept-icon"><i class="fas fa-trophy"></i></div>
+          <h4>赛事执行部</h4>
+          <ul>
+            <li>赛事策划与执行</li>
+            <li>裁判团队管理</li>
+            <li>安全保障体系</li>
+            <li>现场协调调度</li>
+          </ul>
+        </div>
+
+        <div class="dept-card">
+          <div class="dept-icon"><i class="fas fa-bullhorn"></i></div>
+          <h4>市场运营部</h4>
+          <ul>
+            <li>品牌推广</li>
+            <li>商务合作</li>
+            <li>社交媒体运营</li>
+            <li>客户关系维护</li>
+          </ul>
+        </div>
+
+        <div class="dept-card">
+          <div class="dept-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h4>文化教育部</h4>
+          <ul>
+            <li>龙舟文化研学</li>
+            <li>企业团建服务</li>
+            <li>青少年培训</li>
+            <li>文化IP开发</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- 关于我们 -->
     <section id="about">
       <div class="about-layout">
         <div class="about-img">
-          <!-- 建议替换为一张比较酷的、暗色调的龙舟或科技图片 -->
           <img
             src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop"
             alt="Team"
@@ -481,7 +939,7 @@
         <div class="about-text">
           <h3>ABOUT US / 关于意诚格物</h3>
           <p style="color: #ccc; margin-bottom: 1rem">
-            坐落于横琴粤澳深度合作区，我们不仅仅是一家体育公司，更是一群探索“水上运动+科技”可能性的极客。
+            坐落于横琴粤澳深度合作区，我们不仅仅是一家体育公司，更是一群探索"水上运动+科技"可能性的极客。
           </p>
           <p style="color: #ccc">
             从传统龙舟的鼓声，到智能码头的静默数据流，我们致力于构建大湾区最专业的水上运动生态圈。
@@ -496,7 +954,7 @@
         <i class="fas fa-map-marker-alt" style="color: var(--neon-cyan)"></i>
         中国·横琴粤澳深度合作区
       </div>
-      <p>Copyright © 2025 YICHENG GEWU. All Rights Reserved.</p>
+      <p>Copyright © 2025 横琴意诚格物文体发展有限公司. All Rights Reserved.</p>
     </footer>
 
     <script>
