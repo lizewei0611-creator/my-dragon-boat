@@ -1,50 +1,385 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>横琴粤澳深度合作区龙舟赛事平台</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>横琴意诚格物文体发展有限公司 | 水上运动·龙舟文化·科技配套</title>
+    <meta
+      name="description"
+      content="横琴意诚格物文体发展有限公司，专注水上运动赛事策划、龙舟文化传播及水上运动科技产品。立足横琴，服务大湾区。"
+    />
+
+    <!-- 引入字体图标 -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- 全局变量与重置 --- */
+      :root {
+        --primary-blue: #00509e; /* 深海蓝 */
+        --secondary-blue: #00a8e8; /* 活力蓝 */
+        --accent-red: #d62828; /* 龙舟红 */
+        --text-dark: #333;
+        --text-light: #f4f4f4;
+        --bg-light: #ffffff;
+        --bg-gray: #f9fafb;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-dark);
+        overflow-x: hidden;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+        transition: 0.3s;
+      }
+      ul {
+        list-style: none;
+      }
+
+      /* --- 导航栏 --- */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 1rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary-blue);
+      }
+      .logo span {
+        color: var(--accent-red);
+      } /* 格物二字可以高亮 */
+
+      nav ul {
+        display: flex;
+        gap: 2rem;
+      }
+      nav a:hover {
+        color: var(--secondary-blue);
+      }
+      .mobile-menu-btn {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* --- 首屏 Hero Section --- */
+      .hero {
+        height: 100vh;
+        background: linear-gradient(rgba(0, 80, 158, 0.6), rgba(0, 0, 0, 0.5)),
+          url("https://images.unsplash.com/photo-1544551763-46a8723ba3f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed; /* 视差滚动效果 */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        padding: 0 20px;
+      }
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      .hero p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        max-width: 800px;
+      }
+      .btn {
+        padding: 12px 30px;
+        background: var(--accent-red);
+        color: white;
+        border-radius: 30px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        border: 2px solid var(--accent-red);
+      }
+      .btn:hover {
+        background: transparent;
+        color: white;
+      }
+
+      /* --- 通用板块样式 --- */
+      section {
+        padding: 5rem 10%;
+      }
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--primary-blue);
+        margin-bottom: 10px;
+      }
+      .section-title p {
+        color: #666;
+      }
+
+      /* --- 业务板块 (卡片式) --- */
+      .services {
+        background: var(--bg-gray);
+      }
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+      .service-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+      .service-card:hover {
+        transform: translateY(-10px);
+      }
+      .icon-box {
+        font-size: 3rem;
+        color: var(--secondary-blue);
+        margin-bottom: 1rem;
+      }
+      .service-card h3 {
+        margin-bottom: 1rem;
+        color: var(--primary-blue);
+      }
+
+      /* --- 关于我们 (图文混排) --- */
+      .about-container {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+      }
+      .about-text {
+        flex: 1;
+        min-width: 300px;
+      }
+      .about-image {
+        flex: 1;
+        min-width: 300px;
+      }
+      .about-image img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      .stats {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      .stat-item h4 {
+        font-size: 2rem;
+        color: var(--accent-red);
+      }
+
+      /* --- 联系我们 --- */
+      .contact {
+        background: var(--primary-blue);
+        color: white;
+        text-align: center;
+      }
+      .contact h2 {
+        color: white;
+      }
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+      .contact-item i {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      /* --- 页脚 --- */
+      footer {
+        background: #1a1a1a;
+        color: #888;
+        text-align: center;
+        padding: 2rem;
+        font-size: 0.9rem;
+      }
+
+      /* --- 响应式适配 --- */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+        nav ul {
+          display: none;
+        } /* 简化处理，移动端暂隐菜单 */
+        .mobile-menu-btn {
+          display: block;
+        }
+        section {
+          padding: 3rem 5%;
+        }
+      }
+    </style>
   </head>
   <body>
+    <!-- 导航栏 -->
     <header>
-      <h1>横琴粤澳深度合作区龙舟赛事</h1>
+      <div class="logo">意诚<span>格物</span></div>
       <nav>
-        <a href="talent.html">公司成员</a>
-        <a href="contact.html">联系我们</a>
+        <ul>
+          <li><a href="#home">首页</a></li>
+          <li><a href="#services">核心业务</a></li>
+          <li><a href="#about">关于我们</a></li>
+          <li><a href="#contact">联系合作</a></li>
+        </ul>
       </nav>
+      <div class="mobile-menu-btn"><i class="fas fa-bars"></i></div>
     </header>
-    <main>
-      <section id="business">
-        <h2>公司主要业务</h2>
-        <div class="business-item">
-          <h3>赛事策划</h3>
-          <img
-            src="images/event-planning.jpg"
-            alt="赛事策划"
-            style="width: 100%; border-radius: 5px"
-          />
-          <p>提供专业的龙舟赛事策划服务，确保赛事顺利进行。</p>
+
+    <!-- 首屏 Hero -->
+    <div id="home" class="hero">
+      <h1>格物致知 · 挥桨未来</h1>
+      <p>立足横琴，深耕水上运动全产业链 | 赛事策划 · 龙舟文化 · 科技装备</p>
+      <a href="#contact" class="btn">开启合作</a>
+    </div>
+
+    <!-- 核心业务 -->
+    <section id="services" class="services">
+      <div class="section-title">
+        <h2>核心业务体系</h2>
+        <p>传统文化与现代科技的完美融合</p>
+      </div>
+      <div class="services-grid">
+        <!-- 业务 1 -->
+        <div class="service-card">
+          <div class="icon-box"><i class="fas fa-water"></i></div>
+          <h3>水上赛事策划</h3>
+          <p>
+            从专业竞技到大众娱乐，提供全流程赛事执行方案。涵盖皮划艇、桨板及大型水上嘉年华。
+          </p>
         </div>
-        <div class="business-item">
-          <h3>活动组织</h3>
-          <img
-            src="images/training.jpg"
-            alt="日常活动组织"
-            style="width: 100%; border-radius: 5px"
-          />
-          <p>提供龙舟团建、党建组织活动，提升企业凝聚力。</p>
+        <!-- 业务 2 -->
+        <div class="service-card">
+          <div class="icon-box"><i class="fas fa-dragon"></i></div>
+          <h3>龙舟文化传播</h3>
+          <p>
+            弘扬中华传统，提供龙舟研学、企业团建及非遗文化讲座，凝聚团队精神。
+          </p>
         </div>
-        <div class="business-item">
-          <h3>设备租赁</h3>
-          <img
-            src="images/equipment.jpg"
-            alt="设备租赁"
-            style="width: 100%; border-radius: 5px"
-          />
-          <p>提供高质量龙舟设备租赁服务，满足不同赛事需求。</p>
+        <!-- 业务 3 -->
+        <div class="service-card">
+          <div class="icon-box"><i class="fas fa-microchip"></i></div>
+          <h3>运动科技配套</h3>
+          <p>
+            研发与销售智能化水上运动装备、电子计时系统及高性能训练器材，科技赋能体育。
+          </p>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about">
+      <div class="about-container">
+        <div class="about-image">
+          <!-- 占位图：建议替换为您公司的实际照片 -->
+          <img
+            src="https://images.unsplash.com/photo-1560252829-804f1a72b308?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+            alt="团队活动"
+          />
+        </div>
+        <div class="about-text">
+          <h2>立足横琴，放眼湾区</h2>
+          <p>
+            横琴意诚格物文体发展有限公司，坐落于粤港澳大湾区核心——横琴。我们秉持“格物致知”的探索精神，致力于将传统水上运动与现代科技相结合。
+          </p>
+          <p>
+            无论是激情的赛事现场，还是深厚的文化研学，我们都追求极致的专业与服务体验。
+          </p>
+
+          <div class="stats">
+            <div class="stat-item">
+              <h4>50+</h4>
+              <p>成功案例</p>
+            </div>
+            <div class="stat-item">
+              <h4>100%</h4>
+              <p>客户满意</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="contact">
+      <div class="section-title">
+        <h2 style="color: white">联系我们</h2>
+        <p style="color: #ddd">期待与您共创水上运动新篇章</p>
+      </div>
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <p>中国·横琴粤澳深度合作区</p>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <p>contact@yichenggewu.com</p>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <p>+86 0756-XXXXXXX</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 横琴意诚格物文体发展有限公司 版权所有</p>
+    </footer>
+
+    <!-- 简单的交互脚本 -->
+    <script>
+      // 简单的平滑滚动
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+
+      // 滚动时导航栏效果（可选）
+      window.addEventListener("scroll", function () {
+        const header = document.querySelector("header");
+        header.style.boxShadow =
+          window.scrollY > 50 ? "0 2px 10px rgba(0,0,0,0.1)" : "none";
+      });
+    </script>
   </body>
 </html>
